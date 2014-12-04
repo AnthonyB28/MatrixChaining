@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <vector>
 #include <algorithm>
+#include <limits>
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -30,12 +31,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		for (int i = 1; i <= ((n-1) - q); ++i)
 		{
 			int j = i + q;
-			long result = -999;
+			long result = std::numeric_limits<long>::max();
 			for (int k = i; k < j; ++k)
 			{
 				long inputResult = input[i - 1] * input[k] * input[j];
-				long check = matrix.at(i).at(n-k) + matrix.at(k + 1).at(n-j) + inputResult;
-				result = std::max(result, check);
+				long matrixResult = matrix.at(i).at(n - k) + matrix.at(k + 1).at(n - j);
+				long check = matrixResult + inputResult;
+				result = std::min(result, check);
 			}
 			matrix.at(i).at(n-j) = result;
 		}
